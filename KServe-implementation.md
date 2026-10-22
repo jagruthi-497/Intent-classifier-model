@@ -1,5 +1,9 @@
 # Kserve Demonstration for Iris model
+# Check current cluster context
+```kubectl config current-context```
 
+# View current context details and active namespace
+```kubectl config get-contexts $(kubectl config current-context) ```
 ### Install Cert Manager
 
 ```
@@ -27,6 +31,13 @@ helm install kserve oci://ghcr.io/kserve/charts/kserve \
   --wait
 ```
 
+### The default KServe cluster installation lacked the ClusterServingRuntime configuration for sklearn models (which relies on mlserver).
+### Resolution when running on free k8 platforms like killercode
+### Apply the official KServe v0.11 runtimes manifest to install the required mlserver runtime environment:
+
+```
+kubectl apply -f [https://raw.githubusercontent.com/kserve/kserve/release-0.11/install/v0.11
+```
 ### Deploy the Intent Classifier model
 
 ```
@@ -68,5 +79,6 @@ curl -s -X POST http://localhost:8080/v1/models/intent-classifier:predict \
   -H "Content-Type: application/json" \
   -d '{"instances":["I want to cancel my subscription"]}' | jq
 ```
+
 
 
