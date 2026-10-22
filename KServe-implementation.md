@@ -65,7 +65,17 @@ EOF
 
 kubectl get inferenceservice intent-classifier -n intent
 ```
+# List all pods in the intent namespace
+```kubectl get pods -n intent```
 
+# Detailed information about a specific pod
+```kubectl describe pod <pod-name> -n intent ```
+
+# List services in the namespace
+```kubectl get svc -n intent ```
+# this give the anme of the svc
+# View predictor container logs to monitor model loading
+``` kubectl logs <pod-name> -n intent -c kserve-container --tail=50```
 ### Port-forward to access the model
 
 ```
